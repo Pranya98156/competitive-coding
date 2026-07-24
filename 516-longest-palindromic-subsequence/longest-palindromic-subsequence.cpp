@@ -1,8 +1,8 @@
 class Solution {
 public:
 int solveOpt(string& a,string& b){
-    vector<int> curr(a.length()+1,0);
-    vector<int> next(a.length()+1,0);
+    vector<int> curr(b.length()+1,0);
+    vector<int> next(b.length()+1,0);
     for(int i=a.length()-1;i>=0;i--){
         for(int j=b.length()-1;j>=0;j--){
             int ans=0;
@@ -19,9 +19,9 @@ int solveOpt(string& a,string& b){
     return next[0];
 }
     int longestPalindromeSubseq(string s) {
-       string revstr=s;
-        reverse(revstr.begin(),revstr.end());
-        int ans=solveOpt(s,revstr);
-        return ans;
+      string revstr=s;
+      reverse(revstr.begin(),revstr.end());
+      int ans=solveOpt(s,revstr);
+      return ans;
     }
 };
