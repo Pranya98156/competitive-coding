@@ -19,6 +19,6 @@ void solve(vector<int>& arr,vector<vector<int>>& ans,int index,vector<int>& cand
        vector<int> arr;
        vector<vector<int>> ans;
        solve(arr,ans,0,candidates,target);
-       return ans; 
+       return ans;
     }
 };
