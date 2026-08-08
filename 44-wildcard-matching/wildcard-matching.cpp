@@ -84,10 +84,43 @@ bool solveTab(string& s,string& p){
     }
      return dp[s.length()][p.length()];
 }
+
+bool solveOpt(string& s,string& p){
+    vector<int> prev(p.length()+1,0);
+    vector<int> curr(p.length()+1,0);
+    prev[0]=true;
+    for(int j=1;j<=p.length();j++){
+        bool flag=true;
+        for(int k=1;k<=j;k++){
+            if(p[k-1]!='*'){
+                flag=false;
+                break;
+            }
+        }
+        prev[j]=flag;
+    }
+    for(int i=1;i<=s.length();i++){
+        curr[0]=false;
+        for(int j=1;j<=p.length();j++){
+            if(s[i-1]==p[j-1] || p[j-1]=='?'){
+                curr[j]=prev[j-1];
+            }
+            else if(p[j-1]=='*'){
+                curr[j]=(prev[j] || curr[j-1]);
+            }
+            else{
+                curr[j]=false;
+            }
+        }
+        prev=curr;
+    }
+    return prev[p.length()];
+}
     bool isMatch(string s, string p) {
       //return solve(s,p,s.length()-1,p.length()-1);
       //vector<vector<int>> dp(s.length(),vector<int> (p.length(),-1));
       //return solveMem(s,p,s.length()-1,p.length()-1,dp);
-      return solveTab(s,p);
+      //return solveTab(s,p);
+      return solveOpt(s,p);
     }
 };
