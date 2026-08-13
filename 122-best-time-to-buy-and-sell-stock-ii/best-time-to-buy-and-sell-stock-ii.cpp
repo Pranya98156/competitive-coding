@@ -66,11 +66,37 @@ int solveTab(vector<int>& prices){
     }
     return dp[0][1];
 }
+
+//optimization
+int solveOpt(vector<int>& prices) {
+
+    int n = prices.size();
+
+    int nextBuy = 0;
+    int nextNotBuy = 0;
+
+    for(int index = n - 1; index >= 0; index--) {
+
+        int currBuy =
+            max(-prices[index] + nextNotBuy,
+                nextBuy);
+
+        int currNotBuy =
+            max(prices[index] + nextBuy,
+                nextNotBuy);
+
+        nextBuy = currBuy;
+        nextNotBuy = currNotBuy;
+    }
+
+    return nextBuy;
+}
     int maxProfit(vector<int>& prices) {
        // return solve(1,0,prices);
         // int n=prices.size();
         // vector<vector<int>> dp(2,vector<int> (n,-1));
         // return solveMem(1,0,prices,dp);
-        return solveTab(prices);
+       // return solveTab(prices);
+        return solveOpt(prices);
     }
 };
