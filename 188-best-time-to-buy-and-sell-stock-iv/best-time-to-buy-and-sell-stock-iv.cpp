@@ -69,12 +69,38 @@ int solveTab(vector<int>& prices,int k){
     }
     return dp[0][0];
 }
+
+//optimization
+int solveOpt(int k,vector<int>& prices){
+    int n=prices.size();
+    vector<int> curr(2*k+1,0);
+    vector<int> next(2*k+1,0);
+    for(int index=n-1;index>=0;index--){
+        for(int operation=0;operation<2*k;operation++){
+            int profit=0;
+            if(operation%2==0){
+                int buykaro=-prices[index]+next[operation+1];
+                int skipkaro=0+next[operation];
+                profit=max(buykaro,skipkaro);
+            }
+            else{
+                int sellkaro=prices[index]+next[operation+1];
+                int ignorekaro=0+next[operation];
+                profit=max(sellkaro,ignorekaro);
+            }
+            curr[operation]=profit;
+        }
+        next=curr;
+    }
+    return next[0];
+}
     int maxProfit(int k, vector<int>& prices) {
         //return solve(0,0,k,prices);
         // int n=prices.size();
         // vector<vector<int>> dp(n,vector<int> (2*k,-1));
         // return solveMem(0,0,k,prices,dp);
         return solveTab(prices,k);
+        return solveOpt(k,prices);
 
     }
 };
