@@ -46,11 +46,35 @@ int solveMem(int index,int operation,int k,vector<int>& prices,vector<vector<int
     }
     return dp[index][operation]=profit;
 }
+
+//tabulation
+int solveTab(vector<int>& prices,int k){
+    int n=prices.size();
+    vector<vector<int>> dp(n+1,vector<int> (2*k+1,0));
+    for(int index=n-1;index>=0;index--){
+        for(int operation=0;operation<2*k;operation++){
+            int profit=0;
+            if(operation%2==0){
+                int buykaro=-prices[index]+dp[index+1][operation+1];
+                int skipkaro=0+dp[index+1][operation];
+                profit=max(buykaro,skipkaro);
+            }
+            else{
+                int sellkaro=prices[index]+dp[index+1][operation+1];
+                int ignorekaro=0+dp[index+1][operation];
+                profit=max(sellkaro,ignorekaro);
+            }
+            dp[index][operation]=profit;
+        }
+    }
+    return dp[0][0];
+}
     int maxProfit(int k, vector<int>& prices) {
         //return solve(0,0,k,prices);
-        int n=prices.size();
-        vector<vector<int>> dp(n,vector<int> (2*k,-1));
-        return solveMem(0,0,k,prices,dp);
+        // int n=prices.size();
+        // vector<vector<int>> dp(n,vector<int> (2*k,-1));
+        // return solveMem(0,0,k,prices,dp);
+        return solveTab(prices,k);
 
     }
 };
