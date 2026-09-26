@@ -10,5 +10,13 @@ public:
             mp[nums[i]]=i;
         }
         return false;
+    // //step 1 create set
+    //     unordered_set<int> st;
+
+    //     for(int i=0;i<n;i++){
+    //         if(i>k){
+    //             if(st.count[nums[i]] && )
+    //         }
+       // }
     }
 };
